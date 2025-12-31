@@ -15,6 +15,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -22,7 +26,7 @@
       line-height: 1.6;
     }
 
-    .row {
+    .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
@@ -34,78 +38,61 @@
       color: white;
       padding: 40px 0;
       text-align: center;
+      /* removed sticky behavior here */
+      position: relative;
+      z-index: 100;
     }
 
-    .header__text {
-      padding: 20px 0;
-    }
-
-    .header__text h1 {
-      font-size: 3em;
+    .header h1 {
+      font-size: 2.5em;
       margin-bottom: 10px;
     }
 
-    .header__text p {
+    .header p {
       font-size: 1.2em;
       margin-bottom: 20px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 12px 30px;
-      background: #ff006e;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      border: none;
-      cursor: pointer;
-      font-size: 1em;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
 
     /* Navigation */
     .nav {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .nav__items {
-      list-style: none;
-      display: flex;
-      gap: 30px;
+      margin-top: 20px;
       flex-wrap: wrap;
-      justify-content: center;
+      gap: 15px;
+      /* removed stickiness — it will scroll naturally */
+      position: relative;
     }
 
-    .nav__link {
+    .nav a {
       color: white;
       text-decoration: none;
-      font-weight: 500;
-      transition: opacity 0.3s;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      transition: background 0.3s;
     }
 
-    .nav__link:hover {
-      opacity: 0.8;
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .nav a.active {
+      background: #ff006e;
     }
 
     /* Main Content */
     main {
       background: white;
-      padding: 60px 0;
+      min-height: 100vh;
     }
 
     section {
       padding: 60px 0;
-      border-bottom: 1px solid #eee;
+      min-height: 100vh;
     }
 
-    h2 {
+    section h1 {
       font-size: 2.5em;
       margin-bottom: 40px;
       color: #667eea;
@@ -113,174 +100,129 @@
     }
 
     /* Certificate Section */
-    .certificate {
+    #certificate {
       text-align: center;
+      background: #f9f9f9;
     }
 
-    .certificate__container {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    .certificate-container {
+      background: white;
       padding: 40px;
       border-radius: 10px;
-      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      margin: 0 auto;
     }
 
-    .certificate__image {
-      max-width: 100%;
-      height: auto;
-      border-radius: 5px;
-      margin-bottom: 20px;
-    }
-
-    .certificate__placeholder {
-      background: white;
-      padding: 60px 40px;
+    .certificate-placeholder {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 80px 40px;
       border-radius: 5px;
       border: 2px dashed #667eea;
       color: #667eea;
     }
 
-    /* Diary Entries */
-    .diary {
-      background: #f9f9f9;
+    /* Diary Section */
+    #home {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     }
 
-    .diary__entries {
+    .diary-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      margin-bottom: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
     }
 
-    .diary__entry-card {
+    .diary-card {
       background: white;
       padding: 25px;
       border-radius: 8px;
       border-left: 5px solid #667eea;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
     }
 
-    .diary__entry-card:hover {
+    .diary-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .diary__entry-day {
+    .diary-card.active {
+      border-left-color: #ff006e;
+      background: linear-gradient(135deg, #667eea15, #764ba215);
+    }
+
+    .diary-card h3 {
       font-size: 1.5em;
-      font-weight: bold;
       color: #667eea;
       margin-bottom: 10px;
     }
 
-    .diary__entry-date {
-      color: #999;
-      font-size: 0.9em;
-      margin-bottom: 15px;
-    }
-
-    .diary__entry-title {
-      font-size: 1.1em;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    .diary__entry-summary {
+    .diary-card p {
       color: #666;
       font-size: 0.95em;
-      margin-bottom: 15px;
-      line-height: 1.5;
     }
 
-    .diary__entry-button {
-      display: inline-block;
-      padding: 8px 16px;
-      background: #667eea;
-      color: white;
-      text-decoration: none;
-      border-radius: 4px;
-      font-size: 0.9em;
-      transition: background 0.3s;
-    }
-
-    .diary__entry-button:hover {
-      background: #764ba2;
-    }
-
-    /* PDF Viewer Modal */
-    .modal {
+    /* PDF Container */
+    .pdf-container {
       display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
+      margin-top: 40px;
+      background: #2b2b2b;
+      border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
-    .modal-content {
-      background: white;
-      margin: 20px auto;
-      padding: 0;
-      width: 95%;
-      height: 90vh;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      max-width: 1000px;
+    .pdf-container.active {
+      display: block;
     }
 
-    .modal-header {
-      padding: 15px 20px;
-      background: #667eea;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-radius: 8px 8px 0 0;
+    .pdf-container iframe {
+      width: 100%;
+      height: 85vh;
+      border: none;
     }
 
-    .modal-header h3 {
-      margin: 0;
-    }
-
-    .close {
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .close:hover {
-      color: #ddd;
-    }
-
-    .pdf-viewer {
-      flex: 1;
-      overflow: auto;
-      background: #f0f0f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pdf-placeholder {
-      text-align: center;
-      color: #999;
-      padding: 40px;
-    }
-
-    /* Projects Section */
-    .projects {
+    /* Day Sections */
+    section[id^="day"] {
       background: #f9f9f9;
     }
 
-    .projects__links {
+    section[id^="day"]:nth-child(even) {
+      background: white;
+    }
+
+    .pdf-wrapper {
+      background: #2b2b2b;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .pdf-wrapper iframe {
+      width: 100%;
+      height: 85vh;
+      border: none;
+      border-radius: 5px;
+    }
+
+    /* Projects Section */
+    #projects {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    #projects h1 {
+      color: white;
+    }
+
+    .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
+      margin-top: 30px;
     }
 
     .project-card {
@@ -299,6 +241,7 @@
     .project-card h3 {
       margin-bottom: 15px;
       color: #667eea;
+      font-size: 1.3em;
     }
 
     .project-card p {
@@ -306,20 +249,30 @@
       margin-bottom: 20px;
     }
 
-    .project-card .btn {
-      width: 100%;
-      text-align: center;
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #ff006e;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
 
     /* Footer */
-    .footer {
-      background: #333;
+    footer {
+      background: #1a1a1a;
       color: white;
       padding: 30px 0;
       text-align: center;
     }
 
-    .footer__social-links {
+    .social-links {
       list-style: none;
       display: flex;
       justify-content: center;
@@ -327,308 +280,341 @@
       margin-bottom: 20px;
     }
 
-    .footer__social-image {
-      width: 30px;
-      height: 30px;
+    .social-links a {
+      color: white;
+      font-size: 1.5em;
       transition: transform 0.3s;
     }
 
-    .footer__social-link-item a:hover .footer__social-image {
+    .social-links a:hover {
       transform: scale(1.2);
     }
 
-    .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: none;
-      background: #667eea;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      transition: background 0.3s;
-      z-index: 999;
-    }
-
-    .back-to-top:hover {
-      background: #764ba2;
-    }
-
-    .back-to-top--visible {
-      display: flex;
-    }
-
-    .back-to-top__image {
-      width: 20px;
-      height: 20px;
-    }
-
     @media (max-width: 768px) {
-      .header__text h1 {
-        font-size: 2em;
-      }
-
-      h2 {
+      .header h1 {
         font-size: 1.8em;
       }
 
-      .nav__items {
-        gap: 15px;
+      section h1 {
+        font-size: 1.8em;
+      }
+
+      .diary-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
-
-<body>
+  <body>
 
   <!-- ***** Header ***** -->
-
-  <header class="header" role="banner" id="top">
-    <div class="row">
-      <nav class="nav" role="navigation">
-        <ul class="nav__items">
-          <li class="nav__item"><a href="#certificate" class="nav__link">Certificate</a></li>
-          <li class="nav__item"><a href="#diary" class="nav__link">Diary Entries</a></li>
-          <li class="nav__item"><a href="#projects" class="nav__link">Projects</a></li>
-          <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
-        </ul>
+  <header class="header">
+    <div class="container">
+      <h1>My Training Journey</h1>
+      <p>Daily Diary & Project Documentation</p>
+      <nav class="nav">
+        <a href="#home">Home</a>
+        <a href="#certificate">Certificate</a>
+        <a href="#day1">Day 1</a>
+        <a href="#day2">Day 2</a>
+        <a href="#day3">Day 3</a>
+        <a href="#day4">Day 4</a>
+        <a href="#day5">Day 5</a>
+        <a href="#day6">Day 6</a>
+        <a href="#day7">Day 7</a>
+        <a href="#day8">Day 8</a>
+        <a href="#day9">Day 9</a>
+        <a href="#day10">Day 10</a>
+        <a href="#day11">Day 11</a>
+        <a href="#day12">Day 12</a>
+        <a href="#day13">Day 13</a>
+        <a href="#day14">Day 14</a>
+        <a href="#projects">Projects</a>
       </nav>
-    </div>
-    <div class="header__text-box row">
-      <div class="header__text">
-        <h1>My 1-Month Training Journey</h1>
-        <p>A comprehensive daily diary documenting my learning and growth</p>
-        <a href="#diary" class="btn">View My Diary</a>
-      </div>
     </div>
   </header>
 
-  <main role="main">
+  <main>
+
+    <!-- ***** Home Section ***** -->
+    <section id="home">
+      <div class="container">
+        <h1>Training Diary Overview</h1>
+        <div class="diary-grid">
+          <div class="diary-card" onclick="location.href='#day1'">
+            <h3>Day 1</h3>
+            <p>Introduction & Orientation</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day2'">
+            <h3>Day 2</h3>
+            <p>Training Day 2</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day3'">
+            <h3>Day 3</h3>
+            <p>Training Day 3</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day4'">
+            <h3>Day 4</h3>
+            <p>Training Day 4</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day5'">
+            <h3>Day 5</h3>
+            <p>Training Day 5</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day6'">
+            <h3>Day 6</h3>
+            <p>Training Day 6</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day7'">
+            <h3>Day 7</h3>
+            <p>Training Day 7</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day8'">
+            <h3>Day 8</h3>
+            <p>Training Day 8</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day9'">
+            <h3>Day 9</h3>
+            <p>Training Day 9</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day10'">
+            <h3>Day 10</h3>
+            <p>Training Day 10</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day11'">
+            <h3>Day 11</h3>
+            <p>Training Day 11</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day12'">
+            <h3>Day 12</h3>
+            <p>Training Day 12</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day13'">
+            <h3>Day 13</h3>
+            <p>Training Day 13</p>
+          </div>
+          <div class="diary-card" onclick="location.href='#day14'">
+            <h3>Day 14</h3>
+            <p>Training Complete!</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ***** Certificate ***** -->
-
-    <section class="certificate" id="certificate">
-      <div class="row">
-        <h2>Certificate of Completion</h2>
-        <div class="certificate__container">
-          <div class="certificate__placeholder">
-            <p>Add your certificate image here</p>
-            <p style="font-size: 0.9em; margin-top: 10px;">Replace with your certificate: &lt;img src="./images/certificate.png" class="certificate__image" alt="Certificate" /&gt;</p>
+    <section id="certificate">
+      <div class="container">
+        <h1>Certificate of Completion</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Certificate.pdf"></iframe>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ***** Diary Entries ***** -->
-
-    <section class="diary" id="diary">
-      <div class="row">
-        <h2>Daily Diary Entries</h2>
-        <div class="diary__entries">
-
-          <div class="diary__entry-card">
-            <div class="diary__entry-day">Day 1</div>
-            <div class="diary__entry-date">Date: [Add your date]</div>
-            <div class="diary__entry-title">Introduction & Orientation</div>
-            <div class="diary__entry-summary">
-              Your Day 1 summary goes here. Describe what you learned, accomplished, and felt during your first day of training.
-            </div>
-            <a href="javascript:void(0)" class="diary__entry-button" onclick="openPDF('day1')">Read Full Entry</a>
-          </div>
-
-          <div class="diary__entry-card">
-            <div class="diary__entry-day">Day 2</div>
-            <div class="diary__entry-date">Date: [Add your date]</div>
-            <div class="diary__entry-title">Training Day 2</div>
-            <div class="diary__entry-summary">
-              Your Day 2 summary goes here. Share your experiences, learnings, and progress from today's training session.
-            </div>
-            <a href="javascript:void(0)" class="diary__entry-button" onclick="openPDF('day2')">Read Full Entry</a>
-          </div>
-
-          <div class="diary__entry-card">
-            <div class="diary__entry-day">Day 3</div>
-            <div class="diary__entry-date">Date: [Add your date]</div>
-            <div class="diary__entry-title">Training Day 3</div>
-            <div class="diary__entry-summary">
-              Your Day 3 summary goes here. Continue documenting your journey and key takeaways from the training program.
-            </div>
-            <a href="javascript:void(0)" class="diary__entry-button" onclick="openPDF('day3')">Read Full Entry</a>
-          </div>
-
-          <div class="diary__entry-card">
-            <div class="diary__entry-day">Day 4</div>
-            <div class="diary__entry-date">Date: [Add your date]</div>
-            <div class="diary__entry-title">Training Day 4</div>
-            <div class="diary__entry-summary">
-              Your Day 4 summary goes here. Reflect on your progress and what you've accomplished so far in the training.
-            </div>
-            <a href="javascript:void(0)" class="diary__entry-button" onclick="openPDF('day4')">Read Full Entry</a>
-          </div>
-
-          <div class="diary__entry-card">
-            <div class="diary__entry-day">Day 5</div>
-            <div class="diary__entry-date">Date: [Add your date]</div>
-            <div class="diary__entry-title">Week 1 Summary</div>
-            <div class="diary__entry-summary">
-              Your Day 5 summary goes here. Summarize the first week's key learnings and how you're progressing.
-            </div>
-            <a href="javascript:void(0)" class="diary__entry-button" onclick="openPDF('day5')">Read Full Entry</a>
-          </div>
-
-          <!-- Add more days as needed -->
-
+    <!-- ***** Day 1 ***** -->
+    <section id="day1" class="section">
+      <div class="container">
+        <h1>Training Report Day 1</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day1.pdf"></iframe>
         </div>
       </div>
     </section>
 
-    <!-- ***** Projects & Links ***** -->
+    <!-- ***** Day 2 ***** -->
+    <section id="day2" class="section">
+      <div class="container">
+        <h1>Training Report Day 2</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day2.pdf"></iframe>
+        </div>
+      </div>
+    </section>
 
-    <section class="projects" id="projects">
-      <div class="row">
-        <h2>Project Resources</h2>
-        <div class="projects__links">
+    <!-- ***** Day 3 ***** -->
+    <section id="day3" class="section">
+      <div class="container">
+        <h1>Training Report Day 3</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day3.pdf"></iframe>
+        </div>
+      </div>
+    </section>
 
+    <!-- ***** Day 4 ***** -->
+    <section id="day4" class="section">
+      <div class="container">
+        <h1>Training Report Day 4</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/ Day4.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 5 ***** -->
+    <section id="day5" class="section">
+      <div class="container">
+        <h1>Training Report Day 5</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day5.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 6 ***** -->
+    <section id="day6" class="section">
+      <div class="container">
+        <h1>Training Report Day 6</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day6.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 7 ***** -->
+    <section id="day7" class="section">
+      <div class="container">
+        <h1>Training Report Day 7</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day7.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 8 ***** -->
+    <section id="day8" class="section">
+      <div class="container">
+        <h1>Training Report Day 8</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day8.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 9 ***** -->
+    <section id="day9" class="section">
+      <div class="container">
+        <h1>Training Report Day 9</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/ Day9.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 10 ***** -->
+    <section id="day10" class="section">
+      <div class="container">
+        <h1>Training Report Day 10</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day10.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 11 ***** -->
+    <section id="day11" class="section">
+      <div class="container">
+        <h1>Training Report Day 11</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day11.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 12 ***** -->
+    <section id="day12" class="section">
+      <div class="container">
+        <h1>Training Report Day 12</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day12.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 13 ***** -->
+    <section id="day13" class="section">
+      <div class="container">
+        <h1>Training Report Day 13</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/ Day13.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Day 14 ***** -->
+    <section id="day14" class="section">
+      <div class="container">
+        <h1>Training Report Day 14</h1>
+        <div class="pdf-wrapper">
+          <iframe src="https://aurelianjavie.github.io/IIT_J/Diary/Day14.pdf"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Projects ***** -->
+    <section id="projects">
+      <div class="container">
+        <h1>Project Resources</h1>
+        <div class="projects-grid">
           <div class="project-card">
             <h3>📊 Project PPT</h3>
-            <p>View my comprehensive project presentation with all details, findings, and demonstrations.</p>
-            <a href="[Add your PPT link here]" class="btn" target="_blank">View Presentation</a>
+            <p>View my comprehensive project presentation with all details and demonstrations.</p>
+            <a href="https://aurelianjavie.github.io/IIT_J/Presentation - Customer Review Summarizer.pdf" class="btn" target="_blank">View Presentation</a>
           </div>
-
           <div class="project-card">
             <h3>💻 GitHub Repository</h3>
-            <p>Explore the complete project code, documentation, and implementation details on GitHub.</p>
-            <a href="[Add your GitHub repo link here]" class="btn" target="_blank">View Code</a>
+            <p>Explore the complete project code and documentation on GitHub.</p>
+            <a href="https://github.com/AurelianJavie/IIT_J" class="btn" target="_blank">View Code</a>
           </div>
-
           <div class="project-card">
             <h3>📝 Project Report</h3>
-            <p>Read the detailed project report with analysis, conclusions, and recommendations.</p>
-            <a href="[Add your report link here]" class="btn" target="_blank">View Report</a>
+            <p>Read the detailed project report with analysis and conclusions.</p>
+            <a href="https://aurelianjavie.github.io/IIT_J/TrainingReport.pdf" class="btn" target="_blank">View Report</a>
           </div>
-
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ***** Contact ***** -->
-
-  <section class="contact" id="contact">
-    <div class="row">
-      <h2>Get in Touch</h2>
-      <div class="contact__info" style="text-align: center; padding: 30px;">
-        <p>
-          Questions about my training journey or the projects I've worked on? Feel free to reach out! I'd be happy to discuss my experiences, learnings, and answer any inquiries.
-        </p>
-        <a href="mailto:[Add your email here]" class="btn">Send Me an Email</a>
-      </div>
-    </div>
-  </section>
-
   <!-- ***** Footer ***** -->
-
-  <footer role="contentinfo" class="footer">
-    <div class="row">
-      <ul class="footer__social-links">
-        <li class="footer__social-link-item">
-          <a href="[Add your Twitter profile link]" title="Link to Twitter Profile" target="_blank">
-            <span style="font-size: 1.5em;">𝕏</span>
-          </a>
-        </li>
-        <li class="footer__social-link-item">
-          <a href="[Add your GitHub profile link]" title="Link to Github Profile" target="_blank">
-            <span style="font-size: 1.5em;">👨‍💻</span>
-          </a>
-        </li>
-        <li class="footer__social-link-item">
-          <a href="[Add your LinkedIn profile link]" title="Link to LinkedIn Profile" target="_blank">
-            <span style="font-size: 1.5em;">💼</span>
-          </a>
-        </li>
+  <footer>
+    <div class="container">
+      <ul class="social-links">
+        <li><a href="https://x.com/stoic_brah" target="_blank">𝕏</a></li>
+        <li><a href="https://github.com/AurelianJavie" target="_blank">💻</a></li>
+        <li><a href="https://www.linkedin.com/in/jaivivek-singh-32a444287/" target="_blank">💼</a></li>
       </ul>
-
-      <p>
-        &copy; 2025 - My Training Diary. All rights reserved.
-      </p>
+      <p>&copy; 2025 - My Training Diary. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- PDF Viewer Modal -->
-  <div id="pdfModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 id="modalTitle">Diary Entry</h3>
-        <span class="close" onclick="closePDF()">&times;</span>
-      </div>
-      <div class="pdf-viewer">
-        <div class="pdf-placeholder">
-          <p>📄 PDF Viewer</p>
-          <p style="margin-top: 10px; font-size: 0.9em;">Replace with your PDF URL: &lt;iframe src="your-pdf-url" style="width: 100%; height: 100%; border: none;"&gt;&lt;/iframe&gt;</p>
-          <p style="margin-top: 15px; font-size: 0.85em;">Example: openPDF('day1') would display: &lt;iframe src="./pdfs/day1.pdf"&gt;&lt;/iframe&gt;</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <a href="#top" class="back-to-top" title="Back to Top" id="backToTop">
-    <img src="./images/arrow-up.svg" alt="Back to Top" class="back-to-top__image"/>
-  </a>
-
   <script>
-    // PDF Modal Functions
-    function openPDF(dayNumber) {
-      const modal = document.getElementById('pdfModal');
-      const title = document.getElementById('modalTitle');
-      const viewer = document.querySelector('.pdf-viewer');
-
-      title.textContent = `Day ${dayNumber.replace('day', '')} - Full Entry`;
-
-      // Replace the PDF placeholder with your actual PDF link
-      // Example: `./pdfs/day1.pdf`
-      viewer.innerHTML = `
-        <iframe 
-          src="./pdfs/${dayNumber}.pdf" 
-          style="width: 100%; height: 100%; border: none;">
-        </iframe>
-      `;
-
-      modal.style.display = 'block';
-    }
-
-    function closePDF() {
-      const modal = document.getElementById('pdfModal');
-      modal.style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-      const modal = document.getElementById('pdfModal');
-      if (event.target === modal) {
-        closePDF();
-      }
-    }
-
-    // Back to Top Button
-    const backToTopButton = document.getElementById('backToTop');
+    // Highlight active nav link on scroll
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav a');
 
     window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 300) {
-        backToTopButton.classList.add('back-to-top--visible');
-      } else {
-        backToTopButton.classList.remove('back-to-top--visible');
-      }
-    });
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= (sectionTop - 200)) {
+          current = section.getAttribute('id');
+        }
+      });
 
-    backToTopButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').slice(1) === current) {
+          link.classList.add('active');
+        }
+      });
     });
   </script>
-
+  
+  
 </body>
 
 </html>
